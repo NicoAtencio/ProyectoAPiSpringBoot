@@ -12,7 +12,8 @@ Hector Nicolas Atencio
 
 ### A tener en cuenta
 
-El proyecto esta configurado para que la administracion de la base de datos MySQL sea a travez de phpMyAdmin
+- El proyecto esta configurado para que la administracion de la base de datos MySQL sea a travez de phpMyAdmin
+- JDK 21
 
 ### Desplegar proyecto
 
