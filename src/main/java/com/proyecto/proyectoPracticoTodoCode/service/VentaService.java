@@ -18,8 +18,9 @@ public class VentaService implements IVentaService{
     }
 
     @Override
-    public void saveSale(Venta ven) {
-        repoVent.save(ven);
+    public Venta saveSale(Venta ven) {
+        Venta venConId = repoVent.save(ven);
+        return venConId;
     }
     @Override
     public Venta findSale(Long id_venta) {

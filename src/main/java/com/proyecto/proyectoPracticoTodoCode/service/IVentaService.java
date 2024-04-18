@@ -7,7 +7,7 @@ import java.util.List;
 public interface IVentaService {
     public List<Venta> getSales();
 
-    public void saveSale(Venta ven);
+    public Venta saveSale(Venta ven);
     public Venta findSale(Long id_venta);
     public void editSale(Venta ven);
 

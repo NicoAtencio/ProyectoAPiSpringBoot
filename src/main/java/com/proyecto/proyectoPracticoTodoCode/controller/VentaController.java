@@ -1,11 +1,14 @@
 package com.proyecto.proyectoPracticoTodoCode.controller;
 
 import com.proyecto.proyectoPracticoTodoCode.model.DetalleVenta;
+import com.proyecto.proyectoPracticoTodoCode.model.DetalleVentaId;
 import com.proyecto.proyectoPracticoTodoCode.model.Producto;
 import com.proyecto.proyectoPracticoTodoCode.model.Venta;
+import com.proyecto.proyectoPracticoTodoCode.service.IDetalleVentaService;
 import com.proyecto.proyectoPracticoTodoCode.service.IProductoService;
 import com.proyecto.proyectoPracticoTodoCode.service.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,6 +19,9 @@ public class VentaController {
     private IVentaService serviceVen;
     @Autowired
     IProductoService prodService;
+    @Autowired
+    IDetalleVentaService detalleService;
+
 
     @GetMapping("/ventas")
     public List<Venta> getSales() {
@@ -23,10 +29,11 @@ public class VentaController {
     }
 
     @PostMapping("/ventas/crear")
-    public String createSale(@RequestBody Venta ven) {
+    public  ResponseEntity<?> createSale(@RequestBody Venta ven) {
         if (ven.getDetalleVentas() == null || ven.getDetalleVentas().isEmpty()) {
-            return "La venta debe tener al menos un detalle";
+            return ResponseEntity.badRequest().body("La venta debe tener al menos un detalle");
         }
+        Venta ventaActual = serviceVen.saveSale(ven);
         double total = 0;
         for(DetalleVenta detalle: ven.getDetalleVentas()) {
             Producto producto = prodService.findProduct(detalle.getProducto().getCodigo_producto());
@@ -35,13 +42,20 @@ public class VentaController {
                 //Actualizar stock
                 producto.setCantidad_disponible(producto.getCantidad_disponible() - detalle.getCantidad());
                 prodService.saveProduct(producto);
+                //Detalle venta
+                detalle.setVenta(ventaActual);
+                detalle.setProducto(producto);
+                detalle.setId(new DetalleVentaId(ventaActual.getCodigo_venta(), producto.getCodigo_producto()));
+
+                // Guardar en la tabla intermedia debe ocurrir después de asegurar que todos los datos necesarios están presentes y correctos
+                detalleService.addDetalle(detalle);
             } else {
-                return "No se puede vendar mas de lo que tenes";
+                return ResponseEntity.badRequest().body("Producto no disponible en cantidad requerida");
             }
         }
-        ven.setTotal(total);
-        serviceVen.saveSale(ven);
-        return "Se creo con exito la venta";
+        ventaActual.setTotal(total);
+        serviceVen.saveSale(ventaActual);
+        return ResponseEntity.ok("Venta creada con éxito");
     }
 
     @GetMapping("/ventas/{id_venta}")
