@@ -1,5 +1,6 @@
 package com.proyecto.proyectoPracticoTodoCode.service;
 
+import com.proyecto.proyectoPracticoTodoCode.dto.ProductoVentaDto;
 import com.proyecto.proyectoPracticoTodoCode.model.Venta;
 
 import java.util.List;
@@ -12,5 +13,7 @@ public interface IVentaService {
     public void editSale(Venta ven);
 
     public void deleteSale(Long id_venta);
+
+    public List<ProductoVentaDto> productsSale(Long id_venta);
 
 }

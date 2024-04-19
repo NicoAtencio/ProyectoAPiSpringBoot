@@ -1,6 +1,7 @@
 package com.proyecto.proyectoPracticoTodoCode.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,6 +13,7 @@ public class DetalleVenta {
     @ManyToOne
     @MapsId("id_venta")
     @JoinColumn(name="id_venta")
+    @JsonIgnore
     private Venta venta;
 
     @ManyToOne

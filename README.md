@@ -21,9 +21,9 @@ Para el correcto despliegue del proyecto debe crear una base de datos en phpMyAd
 
 ### Peticiones
 
-Se recomienda para observar el correcto funcionamiento del proyecto realizar las siguientes peticiones HTTP en el siguiente orden:
+Se recomienda para observar el correcto funcionamiento del proyecto realizar las siguientes peticiones HTTP en el siguiente orden, en este caso se usa el puerto local 8080 pero en caso de usar otro puerto se debe modificar el puerto en la url:
 
-- Creacion de un cliente en el edpoint correspondiente pasar por body
+- Creacion de un cliente en el edpoint correspondiente POST http://localhost:8080/cliente/crear pasar por body
 {
     "nombre": "Alguien",
     "apellido": "Primero",
@@ -37,7 +37,7 @@ Se recomienda para observar el correcto funcionamiento del proyecto realizar las
     "dni": "222"
 }
 
-- Creacion de un producto pasar por body 
+- Creacion de un producto POST http://localhost:8080/productos/crear  pasar por body
 {
     "nombre": "Producto 1",
     "marca": "Buena",
@@ -53,7 +53,7 @@ Se recomienda para observar el correcto funcionamiento del proyecto realizar las
     "cantidad_disponible": 20
 }
 
-- Creacion de una venta pasar por body 
+- Creacion de una venta POST http://localhost:8080/ventas/crear pasar por body
 {
     "fecha_venta": "2024-04-16",
     "detalleVentas": [
@@ -74,3 +74,9 @@ Se recomienda para observar el correcto funcionamiento del proyecto realizar las
         "id_cliente": 1
     }
 }
+
+- Mostrar los productos que tengan la misma o menor cantidad con respecto al parametro que le pasemos con endpoint GET http://localhost:8080/productos/cantidadmaxima/10 En este caso mostrará todos los productos que tienen 10 o menos cantidad de stock. Se puede pasar el numero que se desee.
+
+- Mostrar los productos con detalles de una venta GET http://localhost:8080/ventas/productos/{id_venta} Devolverá un arreglo de los productos de una venta especifica.
+
+
