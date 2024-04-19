@@ -1,5 +1,6 @@
 package com.proyecto.proyectoPracticoTodoCode.controller;
 
+import com.proyecto.proyectoPracticoTodoCode.dto.ListaDeVentasUnDiaDto;
 import com.proyecto.proyectoPracticoTodoCode.dto.ProductoVentaDto;
 import com.proyecto.proyectoPracticoTodoCode.model.DetalleVenta;
 import com.proyecto.proyectoPracticoTodoCode.model.DetalleVentaId;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -89,5 +91,15 @@ public class VentaController {
     @GetMapping("/ventas/productos/{id_venta}")
     public List<ProductoVentaDto> mostrarProductosDeUnaVenta(@PathVariable Long id_venta) {
         return serviceVen.productsSale(id_venta);
+    }
+
+    //Obtener las ventas con detalles en un dia especifico
+    @GetMapping("/venta/{fecha}")
+    public ResponseEntity<?> detallesDeUnDia (@PathVariable LocalDate fecha) {
+        ListaDeVentasUnDiaDto listaVentas = serviceVen.ventasUnDia(fecha);
+        if(listaVentas == null || listaVentas.getListaVentasUnDia().size() < 1){
+            return ResponseEntity.badRequest().body("No hay ventas en la fecha asignada");
+        }
+        return ResponseEntity.ok(listaVentas);
     }
 }

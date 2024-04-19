@@ -55,7 +55,7 @@ Se recomienda para observar el correcto funcionamiento del proyecto realizar las
 
 - Creacion de una venta POST http://localhost:8080/ventas/crear pasar por body
 {
-    "fecha_venta": "2024-04-16",
+    "fechaVenta": "2024-04-16",
     "detalleVentas": [
         {
             "producto":{
@@ -77,6 +77,8 @@ Se recomienda para observar el correcto funcionamiento del proyecto realizar las
 
 - Mostrar los productos que tengan la misma o menor cantidad con respecto al parametro que le pasemos con endpoint GET http://localhost:8080/productos/cantidadmaxima/10 En este caso mostrará todos los productos que tienen 10 o menos cantidad de stock. Se puede pasar el numero que se desee.
 
-- Mostrar los productos con detalles de una venta GET http://localhost:8080/ventas/productos/{id_venta} Devolverá un arreglo de los productos de una venta especifica.
+- Mostrar los productos con detalles de una venta GET http://localhost:8080/ventas/productos/1 Devolverá un arreglo de los productos de una venta especifica, en este caso la del id 1 pero puede ser cualquiera que se seleccione.
+
+- Mostrar los productos de un dia, la cantidad de ventas y el total de un dia especifico GET http://localhost:8080/venta/productos/2024-04-16 En el ejemplo si tiene ventas el 16 de abril de 2024 las mostrará sino mostrará un aviso de que no hay ventas ese dia.
 
 

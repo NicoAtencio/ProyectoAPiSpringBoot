@@ -1,8 +1,10 @@
 package com.proyecto.proyectoPracticoTodoCode.service;
 
+import com.proyecto.proyectoPracticoTodoCode.dto.ListaDeVentasUnDiaDto;
 import com.proyecto.proyectoPracticoTodoCode.dto.ProductoVentaDto;
 import com.proyecto.proyectoPracticoTodoCode.model.Venta;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IVentaService {
@@ -15,5 +17,7 @@ public interface IVentaService {
     public void deleteSale(Long id_venta);
 
     public List<ProductoVentaDto> productsSale(Long id_venta);
+
+    public ListaDeVentasUnDiaDto ventasUnDia(LocalDate date);
 
 }

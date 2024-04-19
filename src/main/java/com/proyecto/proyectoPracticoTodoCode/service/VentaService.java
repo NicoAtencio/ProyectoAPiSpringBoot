@@ -1,13 +1,17 @@
 package com.proyecto.proyectoPracticoTodoCode.service;
 
+import com.proyecto.proyectoPracticoTodoCode.dto.ListaDeVentasUnDiaDto;
 import com.proyecto.proyectoPracticoTodoCode.dto.ProductoVentaDto;
+import com.proyecto.proyectoPracticoTodoCode.dto.VentaDeUnDiaDto;
 import com.proyecto.proyectoPracticoTodoCode.model.DetalleVenta;
+import com.proyecto.proyectoPracticoTodoCode.model.Producto;
 import com.proyecto.proyectoPracticoTodoCode.model.Venta;
 import com.proyecto.proyectoPracticoTodoCode.repository.IDetalleVentaRepository;
 import com.proyecto.proyectoPracticoTodoCode.repository.IVentaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,4 +61,27 @@ public class VentaService implements IVentaService{
         }
         return listaDto;
     }
+
+    @Override
+    public ListaDeVentasUnDiaDto ventasUnDia(LocalDate date) {
+        List<Venta> listaVentas = repoVent.findByFechaVenta(date);
+        List<VentaDeUnDiaDto> listaDtos = new ArrayList<>();
+        double total = 0;
+        for(Venta ven : listaVentas) {
+            VentaDeUnDiaDto ventaDto = new VentaDeUnDiaDto();
+            ventaDto.setIdVenta(ven.getCodigo_venta());
+            ventaDto.setTotal(ven.getTotal());
+            List<Producto> listaProductos = new ArrayList<>();
+            for(DetalleVenta detalle : ven.getDetalleVentas()) {
+                listaProductos.add(detalle.getProducto());
+            }
+            total += ven.getTotal();
+            ventaDto.setListaProductos(listaProductos);
+            listaDtos.add(ventaDto);
+        }
+        ListaDeVentasUnDiaDto listaUnDiaDeVentas = new ListaDeVentasUnDiaDto(listaDtos,listaDtos.size(),total);
+        return listaUnDiaDeVentas;
+    }
+
+
 }

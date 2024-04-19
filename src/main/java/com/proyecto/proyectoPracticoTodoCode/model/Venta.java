@@ -10,7 +10,8 @@ public class Venta {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long codigo_venta;
-    private LocalDate fecha_venta;
+    @Column(name = "fecha_venta")  // Esto mapea la columna de la base de datos.
+    private LocalDate fechaVenta;
     private Double total;
     @OneToMany(mappedBy = "venta")
     private List<DetalleVenta> detalleVentas;
@@ -22,9 +23,9 @@ public class Venta {
     public Venta() {
     }
 
-    public Venta(Long codigo_venta, LocalDate fecha_venta, Double total, List<DetalleVenta> detalleVentas, Cliente unCliente) {
+    public Venta(Long codigo_venta, LocalDate fechaVenta, Double total, List<DetalleVenta> detalleVentas, Cliente unCliente) {
         this.codigo_venta = codigo_venta;
-        this.fecha_venta = fecha_venta;
+        this.fechaVenta = fechaVenta;
         this.total = total;
         this.detalleVentas = detalleVentas;
         this.unCliente = unCliente;
@@ -38,12 +39,12 @@ public class Venta {
         this.codigo_venta = codigo_venta;
     }
 
-    public LocalDate getFecha_venta() {
-        return fecha_venta;
+    public LocalDate getFechaVenta() {
+        return fechaVenta;
     }
 
-    public void setFecha_venta(LocalDate fecha_venta) {
-        this.fecha_venta = fecha_venta;
+    public void setFechaVenta(LocalDate fechaVenta) {
+        this.fechaVenta = fechaVenta;
     }
 
     public Double getTotal() {
